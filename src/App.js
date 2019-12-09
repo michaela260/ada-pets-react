@@ -22,7 +22,12 @@ class App extends Component {
     console.log(pets);
   }
 
-
+  onSelectPet = (rightPetId) => {
+    const rightPet = this.state.petList[rightPetId]
+    this.setState({
+      currentPet: rightPet
+    })
+  }
 
 
   render () {
@@ -33,15 +38,20 @@ class App extends Component {
         <header className="app-header">
           <h1>Ada Pets</h1>
         </header>
-        <section className="search-bar-wrapper">
+        <section className="search-bar">
           { /* Wave 4:  Place to add the SearchBar component */}
           <SearchBar />
         </section>
-        { /* Wave 1:  Where Pet Details should appear */}
-        <section className="pet-list-wrapper">
-          { /* Wave 1:  Where PetList should appear */}
+        {/* Pet details should be here  */}
+        <section className="pet-details">
+          <PetDetails
+            currentPet={currentPet}
+          />
         </section>
-        <section className="new-pet-form-wrapper">
+        <section className="pet-list">
+          <PetList pets={this.state.petList} onSelectPet={this.onSelectPet}/>
+        </section>
+        <section className="new-pet-form">
           { /* Wave 3:  Where NewPetForm should appear */}
         </section>
       </main>
