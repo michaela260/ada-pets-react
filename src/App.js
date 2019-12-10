@@ -43,6 +43,15 @@ class App extends Component {
     })
   }
 
+  addPet = (pet) => {
+    const { petList } = this.state;
+
+    petList.push(pet);
+    this.setState({
+      petList,
+    });
+  }
+
 
   render () {
     const { currentPet } = this.state;
@@ -56,7 +65,6 @@ class App extends Component {
           { /* Wave 4:  Place to add the SearchBar component */}
           <SearchBar />
         </section>
-        {/* Pet details should be here  */}
         <section className="pet-details">
           <PetDetails
             currentPet={currentPet}
@@ -66,7 +74,7 @@ class App extends Component {
           <PetList pets={this.state.petList} onSelectPet={this.onSelectPet} onRemovePet={this.onRemovePet}/>
         </section>
         <section className="new-pet-form">
-          { /* Wave 3:  Where NewPetForm should appear */}
+          <NewPetForm addPetCallback={this.addPet}/>
         </section>
       </main>
     );

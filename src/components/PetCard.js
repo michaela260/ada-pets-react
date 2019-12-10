@@ -52,6 +52,7 @@ const PetCard = (props) => {
 
 PetCard.propTypes = {
   id: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
   about: PropTypes.string,
