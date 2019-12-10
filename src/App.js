@@ -29,6 +29,20 @@ class App extends Component {
     })
   }
 
+  onRemovePet = (petId) => {
+    if (this.state.currentPet !== undefined && this.state.currentPet.id === petId + 1) {
+      this.setState({
+        currentPet: undefined
+      })
+    }
+
+    let allPets = this.state.petList;
+    allPets.splice(petId, 1);
+    this.setState({
+      petList: allPets
+    })
+  }
+
 
   render () {
     const { currentPet } = this.state;
@@ -49,7 +63,7 @@ class App extends Component {
           />
         </section>
         <section className="pet-list">
-          <PetList pets={this.state.petList} onSelectPet={this.onSelectPet}/>
+          <PetList pets={this.state.petList} onSelectPet={this.onSelectPet} onRemovePet={this.onRemovePet}/>
         </section>
         <section className="new-pet-form">
           { /* Wave 3:  Where NewPetForm should appear */}

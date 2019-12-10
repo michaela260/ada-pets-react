@@ -10,12 +10,14 @@ const PetList = (props) => {
   const allPets = props.pets.map((pet, i) => {
     return (
       <PetCard key={i}
+      index={i}
       id={pet.id}
       name={pet.name}
       species={pet.species}
       about={pet.about}
       location={pet.location}
       onSelectPet={props.onSelectPet}
+      onRemovePet={props.onRemovePet}
       />
     )
   });
@@ -31,6 +33,7 @@ const PetList = (props) => {
 PetList.propTypes = {
   pets: PropTypes.array.isRequired,
   onSelectPet: PropTypes.func,
+  onRemovePet: PropTypes.func,
 };
 
 export default PetList;
