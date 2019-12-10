@@ -18,28 +18,36 @@ class App extends Component {
     this.state = {
       petList: pets,
       currentPet: undefined,
+      filterPets: pets,
     };
     console.log(pets);
   }
 
   onSelectPet = (rightPetId) => {
-    const rightPet = this.state.petList[rightPetId]
+    const rightPet = this.state.filterPets[rightPetId]
     this.setState({
       currentPet: rightPet
     })
   }
 
-  onRemovePet = (petId) => {
-    if (this.state.currentPet === this.state.petList[petId]) {
+  onRemovePet = (petIndex) => {
+    if (this.state.currentPet === this.state.filterPets[petIndex]) {
       this.setState({
         currentPet: undefined
       })
     }
-
+    
+    let filteredPets = this.state.filterPets
     let allPets = this.state.petList;
-    allPets.splice(petId, 1);
+    let newPetList = allPets.filter(function(value, index, arr){
+
+      return value !== filteredPets[petIndex];
+    });
+    
+    // allPets.splice(petIndex, 1);
     this.setState({
-      petList: allPets
+      petList: newPetList,
+      filterPets: newPetList,
     })
   }
 
@@ -48,10 +56,31 @@ class App extends Component {
 
     petList.push(pet);
     this.setState({
-      petList,
+      petList: petList,
+      filterPets: petList,
     });
   }
 
+  filterPets = (searchTerm) => {
+    let searchedPets = [];
+    let hasSearchTerm = new RegExp(searchTerm, 'i');
+    let i;
+    for (i = 0; i < this.state.petList.length; i++) {
+      if (hasSearchTerm.test(this.state.petList[i].name) || hasSearchTerm.test(this.state.petList[i].about) || hasSearchTerm.test(this.state.petList[i].species)) {
+        searchedPets.push(this.state.petList[i])
+      }
+    };
+
+    if (searchTerm === '') {
+      this.setState({
+        filterPets: this.state.petList
+      });
+    } else {
+      this.setState({
+        filterPets: searchedPets
+      });
+    }
+  }
 
   render () {
     const { currentPet } = this.state;
@@ -63,7 +92,7 @@ class App extends Component {
         </header>
         <section className="search-bar">
           { /* Wave 4:  Place to add the SearchBar component */}
-          <SearchBar />
+          <SearchBar filterPetCallback={this.filterPets}/>
         </section>
         <section className="pet-details">
           <PetDetails
@@ -71,7 +100,7 @@ class App extends Component {
           />
         </section>
         <section className="pet-list">
-          <PetList pets={this.state.petList} onSelectPet={this.onSelectPet} onRemovePet={this.onRemovePet}/>
+          <PetList pets={this.state.filterPets} onSelectPet={this.onSelectPet} onRemovePet={this.onRemovePet}/>
         </section>
         <section className="new-pet-form">
           <NewPetForm addPetCallback={this.addPet}/>
