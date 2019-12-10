@@ -9,7 +9,11 @@ class NewPetForm extends Component {
     super(props);
 
     this.state = {
-
+      name: '',
+      location: '',
+      about: '',
+      species: '',
+      images: [],
     };
   }
   

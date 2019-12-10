@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   onRemovePet = (petId) => {
-    if (this.state.currentPet !== undefined && this.state.currentPet.id === petId + 1) {
+    if (this.state.currentPet === this.state.petList[petId]) {
       this.setState({
         currentPet: undefined
       })
